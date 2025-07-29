@@ -27,7 +27,6 @@ namespace TaskC_IncidentMAUI
 
             // Register Views
             builder.Services.AddTransient<IncidentFormPage>();
-            builder.Services.AddTransient<MainPage>();
 
             builder.Services.AddLogging(configure => configure.AddDebug());
 
