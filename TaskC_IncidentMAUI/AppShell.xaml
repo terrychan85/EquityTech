@@ -4,13 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TaskC_IncidentMAUI.Views"
-    Title="TaskC_IncidentMAUI">
+    Title="Incident Report App">
 
-    <TabBar>
-        <ShellContent
-            Title="Home"
-            ContentTemplate="{DataTemplate local:IncidentFormPage}"
-            Icon="{OnPlatform 'icon_about.png', iOS='icon_about.png', MacCatalyst='icon_about.png'}" />
-    </TabBar>
+    <local:IncidentFormPage />
 
 </Shell>
