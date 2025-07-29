@@ -49,8 +49,7 @@
                                FontSize="16"/>
                         <Label Text="This will be transformed to 'incident_title'" 
                                FontSize="12" 
-                               TextColor="LightGray" 
-                               FontStyle="Italic"/>
+                               TextColor="LightGray" />
                     </VerticalStackLayout>
                 </Frame>
 
@@ -72,8 +71,7 @@
                                 FontSize="16"/>
                         <Label Text="This will be transformed to 'severity_level' with value mapping" 
                                FontSize="12" 
-                               TextColor="LightGray" 
-                               FontStyle="Italic"/>
+                               TextColor="LightGray" />
                     </VerticalStackLayout>
                 </Frame>
 
