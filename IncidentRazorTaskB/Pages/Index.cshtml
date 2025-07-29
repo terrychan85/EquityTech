@@ -1,0 +1,33 @@
+@page
+@model IncidentsModel
+@{
+    ViewData["Title"] = "Incidents";
+}
+
+<h1>Incident List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Severity</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var incident in Model.Incidents)
+    {
+        <tr>
+            <td class="@Model.GetSeverityClass(incident.Severity)">@incident.Title</td>
+            <td class="@Model.GetSeverityClass(incident.Severity)">@incident.Description</td>
+            <td class="@Model.GetSeverityClass(incident.Severity)">@incident.Severity</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<style>
+    .severity-low { background-color: #e0f7fa !important; }
+    .severity-medium { background-color: #fff9c4 !important; }
+    .severity-high { background-color: #ffcdd2 !important; }
+</style> 
