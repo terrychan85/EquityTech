@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
+using TaskC_IncidentMAUI.Services;
+using TaskC_IncidentMAUI.ViewModels;
+using TaskC_IncidentMAUI.Views;
 
 namespace TaskC_IncidentMAUI
 {
@@ -15,9 +18,21 @@ namespace TaskC_IncidentMAUI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+            // Register HttpClient
+            builder.Services.AddHttpClient<IIncidentApiService, IncidentApiService>();
+
+            // Register services
+            builder.Services.AddSingleton<MockApiServerService>();
+            builder.Services.AddSingleton<IIncidentApiService, IncidentApiService>();
+
+            // Register ViewModels
+            builder.Services.AddTransient<IncidentFormViewModel>();
+
+            // Register Views
+            builder.Services.AddTransient<IncidentFormPage>();
+            builder.Services.AddTransient<MainPage>();
+
+            builder.Services.AddLogging(configure => configure.AddDebug());
 
             return builder.Build();
         }
