@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TaskC_IncidentMAUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+60c67d3c62876188e1a27a91a6864195a4547e0d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+a65b8c4378cfd83b3eaa35c32d5068bbef5d03c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("TaskC_IncidentMAUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TaskC_IncidentMAUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
