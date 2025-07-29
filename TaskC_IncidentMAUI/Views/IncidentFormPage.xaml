@@ -8,7 +8,7 @@
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <ScrollView Padding="20">
-        <VerticalStackLayout Spacing="20">
+        <VerticalStackLayout Spacing="30">
             
             <!-- Header -->
             <Frame BackgroundColor="{DynamicResource PrimaryBrush}" 
@@ -20,183 +20,86 @@
                            FontAttributes="Bold" 
                            TextColor="White" 
                            HorizontalOptions="Center"/>
-                    <Label Text="Please fill out all required fields marked with *" 
+                    <Label Text="Simple form with field transformation demo" 
                            FontSize="14" 
                            TextColor="White" 
                            HorizontalOptions="Center"/>
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- API Status Check -->
-            <Button Text="🔗 Check API Status" 
-                    Command="{Binding CheckApiStatusCommand}" 
-                    BackgroundColor="{DynamicResource SecondaryBrush}"
-                    TextColor="White"
-                    CornerRadius="8"/>
-
             <!-- Form Fields -->
-            <VerticalStackLayout Spacing="15">
+            <VerticalStackLayout Spacing="20">
                 
                 <!-- Title -->
                 <Frame BackgroundColor="{DynamicResource SecondaryBrush}" 
                        CornerRadius="8" 
-                       Padding="15" 
+                       Padding="20" 
                        HasShadow="True">
-                    <VerticalStackLayout Spacing="8">
+                    <VerticalStackLayout Spacing="12">
                         <Label Text="Incident Title *" 
-                               FontSize="16" 
+                               FontSize="18" 
                                FontAttributes="Bold" 
                                TextColor="White"/>
                         <Entry x:Name="TitleEntry" 
                                Text="{Binding FormData.Title}" 
-                               Placeholder="Enter incident title"
+                               Placeholder="Enter incident title (wrong field name)"
                                BackgroundColor="White"
                                TextColor="Black"
-                               PlaceholderColor="Gray"/>
+                               PlaceholderColor="Gray"
+                               FontSize="16"/>
+                        <Label Text="This will be transformed to 'incident_title'" 
+                               FontSize="12" 
+                               TextColor="LightGray" 
+                               FontStyle="Italic"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Description -->
+                <!-- Severity -->
                 <Frame BackgroundColor="{DynamicResource SecondaryBrush}" 
                        CornerRadius="8" 
-                       Padding="15" 
+                       Padding="20" 
                        HasShadow="True">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="Description *" 
-                               FontSize="16" 
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Severity Level *" 
+                               FontSize="18" 
                                FontAttributes="Bold" 
                                TextColor="White"/>
-                        <Editor x:Name="DescriptionEditor" 
-                                Text="{Binding FormData.Description}" 
-                                Placeholder="Describe the incident in detail"
-                                HeightRequest="100"
+                        <Picker x:Name="SeverityPicker" 
+                                ItemsSource="{Binding SeverityOptions}" 
+                                SelectedItem="{Binding FormData.Severity}"
                                 BackgroundColor="White"
                                 TextColor="Black"
-                                PlaceholderColor="Gray"/>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- Reporter Information -->
-                <Frame BackgroundColor="{DynamicResource SecondaryBrush}" 
-                       CornerRadius="8" 
-                       Padding="15" 
-                       HasShadow="True">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="Reporter Information" 
-                               FontSize="18" 
-                               FontAttributes="Bold" 
-                               TextColor="White"/>
-                        
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="Full Name *" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="White"/>
-                            <Entry Text="{Binding FormData.ReporterName}" 
-                                   Placeholder="Enter your full name"
-                                   BackgroundColor="White"
-                                   TextColor="Black"
-                                   PlaceholderColor="Gray"/>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="Email Address *" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="White"/>
-                            <Entry Text="{Binding FormData.Email}" 
-                                   Placeholder="Enter your email address"
-                                   Keyboard="Email"
-                                   BackgroundColor="White"
-                                   TextColor="Black"
-                                   PlaceholderColor="Gray"/>
-                        </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- Priority and Category -->
-                <Frame BackgroundColor="{DynamicResource SecondaryBrush}" 
-                       CornerRadius="8" 
-                       Padding="15" 
-                       HasShadow="True">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="Classification" 
-                               FontSize="18" 
-                               FontAttributes="Bold" 
-                               TextColor="White"/>
-                        
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="Priority Level *" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="White"/>
-                            <Picker x:Name="PriorityPicker" 
-                                    ItemsSource="{Binding PriorityOptions}" 
-                                    SelectedItem="{Binding FormData.Priority}"
-                                    BackgroundColor="White"
-                                    TextColor="Black"/>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="Category *" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="White"/>
-                            <Picker x:Name="CategoryPicker" 
-                                    ItemsSource="{Binding CategoryOptions}" 
-                                    SelectedItem="{Binding FormData.Category}"
-                                    BackgroundColor="White"
-                                    TextColor="Black"/>
-                        </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- Additional Information -->
-                <Frame BackgroundColor="{DynamicResource SecondaryBrush}" 
-                       CornerRadius="8" 
-                       Padding="15" 
-                       HasShadow="True">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="Additional Information" 
-                               FontSize="18" 
-                               FontAttributes="Bold" 
-                               TextColor="White"/>
-                        
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="Location (Optional)" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="White"/>
-                            <Entry Text="{Binding FormData.Location}" 
-                                   Placeholder="Enter incident location"
-                                   BackgroundColor="White"
-                                   TextColor="Black"
-                                   PlaceholderColor="Gray"/>
-                        </VerticalStackLayout>
-
-                        <HorizontalStackLayout Spacing="10">
-                            <CheckBox x:Name="UrgentCheckBox" 
-                                      IsChecked="{Binding FormData.IsUrgent}"
-                                      Color="{DynamicResource PrimaryBrush}"/>
-                            <Label Text="Mark as Urgent" 
-                                   FontSize="16" 
-                                   TextColor="White" 
-                                   VerticalOptions="Center"/>
-                        </HorizontalStackLayout>
-
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="Date Reported" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="White"/>
-                            <DatePicker Date="{Binding FormData.DateReported}"
-                                        BackgroundColor="White"
-                                        TextColor="Black"/>
-                        </VerticalStackLayout>
+                                FontSize="16"/>
+                        <Label Text="This will be transformed to 'severity_level' with value mapping" 
+                               FontSize="12" 
+                               TextColor="LightGray" 
+                               FontStyle="Italic"/>
                     </VerticalStackLayout>
                 </Frame>
 
             </VerticalStackLayout>
+
+            <!-- Field Transformation Info -->
+            <Frame BackgroundColor="{DynamicResource TertiaryBrush}" 
+                   CornerRadius="8" 
+                   Padding="15" 
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="🔄 Field Transformation Demo" 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           TextColor="White"/>
+                    <Label Text="• Title → incident_title" 
+                           FontSize="14" 
+                           TextColor="White"/>
+                    <Label Text="• Severity → severity_level (with value mapping)" 
+                           FontSize="14" 
+                           TextColor="White"/>
+                    <Label Text="• Example: 'High' becomes 'sev_high'" 
+                           FontSize="14" 
+                           TextColor="White"/>
+                </VerticalStackLayout>
+            </Frame>
 
             <!-- Validation Errors -->
             <CollectionView ItemsSource="{Binding ValidationErrors}" 
@@ -217,7 +120,7 @@
 
             <!-- Submit Button -->
             <Button x:Name="SubmitButton" 
-                    Text="🚀 Submit Incident Report" 
+                    Text="🚀 Submit to Mock API" 
                     Command="{Binding SubmitFormCommand}"
                     IsEnabled="{Binding IsSubmitting, Converter={StaticResource InvertedBoolConverter}}"
                     BackgroundColor="{DynamicResource PrimaryBrush}"
@@ -226,7 +129,7 @@
                     FontAttributes="Bold"
                     Padding="15"
                     CornerRadius="10"
-                    Margin="0,20,0,10"/>
+                    Margin="0,10,0,10"/>
 
             <!-- Reset Button -->
             <Button Text="🔄 Reset Form" 
@@ -243,8 +146,7 @@
                    Padding="15" 
                    IsVisible="{Binding SubmitMessage, Converter={StaticResource StringToBoolConverter}}">
                 <Label Text="{Binding SubmitMessage}" 
-                       FontSize="16" 
-                       FontAttributes="Bold" 
+                       FontSize="14" 
                        TextColor="White" 
                        HorizontalOptions="Center"/>
             </Frame>

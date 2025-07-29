@@ -16,9 +16,8 @@ namespace TaskC_IncidentMAUI.ViewModels
             _apiService = apiService;
             FormData = new IncidentFormModel();
             
-            // Initialize collections for dropdowns
-            PriorityOptions = new ObservableCollection<string> { "Low", "Medium", "High", "Critical" };
-            CategoryOptions = new ObservableCollection<string> { "General", "Technical", "Security", "Hardware", "Software" };
+            // Initialize severity options
+            SeverityOptions = new ObservableCollection<string> { "Low", "Medium", "High", "Critical" };
             
             ValidationErrors = new ObservableCollection<string>();
         }
@@ -38,8 +37,7 @@ namespace TaskC_IncidentMAUI.ViewModels
         [ObservableProperty]
         private bool hasSubmitted;
 
-        public ObservableCollection<string> PriorityOptions { get; }
-        public ObservableCollection<string> CategoryOptions { get; }
+        public ObservableCollection<string> SeverityOptions { get; }
         public ObservableCollection<string> ValidationErrors { get; }
 
         [RelayCommand]
@@ -56,18 +54,16 @@ namespace TaskC_IncidentMAUI.ViewModels
 
             try
             {
-                bool success = await _apiService.SubmitIncidentAsync(FormData);
+                var result = await _apiService.SubmitIncidentAsync(FormData);
                 
-                if (success)
+                if (result.Success)
                 {
-                    SubmitMessage = "Incident submitted successfully!";
+                    SubmitMessage = result.Message;
                     HasSubmitted = true;
-                    // Reset form after successful submission
-                    ResetForm();
                 }
                 else
                 {
-                    SubmitMessage = "Failed to submit incident. Please try again.";
+                    SubmitMessage = result.Message;
                 }
             }
             catch (Exception ex)
@@ -77,20 +73,6 @@ namespace TaskC_IncidentMAUI.ViewModels
             finally
             {
                 IsSubmitting = false;
-            }
-        }
-
-        [RelayCommand]
-        private async Task CheckApiStatusAsync()
-        {
-            try
-            {
-                string status = await _apiService.GetSubmissionStatusAsync();
-                SubmitMessage = $"API Status: {status}";
-            }
-            catch (Exception ex)
-            {
-                SubmitMessage = $"Error checking API status: {ex.Message}";
             }
         }
 

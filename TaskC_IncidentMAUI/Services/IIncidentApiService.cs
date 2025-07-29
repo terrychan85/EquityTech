@@ -4,7 +4,6 @@ namespace TaskC_IncidentMAUI.Services
 {
     public interface IIncidentApiService
     {
-        Task<bool> SubmitIncidentAsync(IncidentFormModel formData);
-        Task<string> GetSubmissionStatusAsync();
+        Task<(bool Success, string Message)> SubmitIncidentAsync(IncidentFormModel formData);
     }
 }

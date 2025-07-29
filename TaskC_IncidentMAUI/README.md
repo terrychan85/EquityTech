@@ -1,222 +1,176 @@
-# Task C: Mobile Data Mismatch & Mock API Handling (.NET MAUI)
+# Task C: Mobile Data Mismatch & Mock API Handling (.NET MAUI) - Simplified
 
 ## Overview
 
-This .NET MAUI application demonstrates handling mobile form data submission with field name transformation and mock API integration. The solution addresses the challenge of data mismatches between client-side form fields and server-side API expectations.
+This simplified .NET MAUI application demonstrates handling mobile form data submission with field name transformation using a local mock service. The solution focuses on the core challenge of data mapping between client-side form fields and expected API field names.
 
 ## 🎯 Challenge Requirements Met
 
-### ✅ MAUI Screen with Form Inputs
-- **IncidentFormPage.xaml**: Comprehensive form with various input types
-- **Input Controls**: Entry, Editor, Picker, DatePicker, CheckBox
+### ✅ MAUI Screen with Form Inputs (Title and Severity only)
+- **IncidentFormPage.xaml**: Clean, focused form with two input fields
+- **Input Controls**: Entry for Title, Picker for Severity
 - **Validation**: Real-time validation with error display
-- **Modern UI**: Responsive design with Frame containers and proper styling
+- **Modern UI**: Simple, responsive design with clear transformation hints
 
-### ✅ JSON Payload Submission to Mock Endpoint
-- **External API**: Uses JSONPlaceholder (https://jsonplaceholder.typicode.com) for real HTTP requests
-- **Mock Server**: Local `MockApiServerService` that simulates API processing
-- **HTTP Client**: Configured HttpClient with proper error handling
-- **Async Operations**: Proper async/await patterns throughout
+### ✅ JSON Payload Submission to Mock Endpoint (Local only)
+- **Local Mock Service**: `MockApiServerService` simulates API processing
+- **No HTTP Calls**: Pure local processing for demonstration
+- **Field Transformation**: Shows exact mapping from form to API format
 
 ### ✅ Field Name Transformation
-- **Client Model**: `IncidentFormModel` with user-friendly field names
-- **API Model**: `IncidentApiModel` with transformed field names
-- **Transformation Logic**: 
-  - `Title` → `incident_title`
-  - `ReporterName` → `reporter_full_name`
-  - `Email` → `contact_email`
-  - `Priority` → `priority_level` (with value mapping)
-  - `Category` → `incident_category` (with value mapping)
-  - And more...
+- **Client Fields**: `Title`, `Severity` (wrong field names)
+- **API Fields**: `incident_title`, `severity_level` (correct field names)
+- **Value Mapping**: Severity values transformed (e.g., "High" → "sev_high")
 
-## 🏗️ Architecture
+## 🏗️ Simplified Architecture
 
 ### Project Structure
 ```
 TaskC_IncidentMAUI/
 ├── Models/
-│   ├── IncidentFormModel.cs     # Client-side form model
-│   └── IncidentApiModel.cs      # API-expected model with JsonPropertyName attributes
+│   ├── IncidentFormModel.cs     # Form model (Title, Severity)
+│   └── IncidentApiModel.cs      # API model (incident_title, severity_level)
 ├── Services/
 │   ├── IIncidentApiService.cs   # Service interface
-│   ├── IncidentApiService.cs    # HTTP client service with transformation
-│   └── MockApiServerService.cs  # Local mock API server
+│   ├── IncidentApiService.cs    # Local service with transformation
+│   └── MockApiServerService.cs  # Local mock API processor
 ├── ViewModels/
-│   └── IncidentFormViewModel.cs # MVVM ViewModel with CommunityToolkit
+│   └── IncidentFormViewModel.cs # MVVM ViewModel
 ├── Views/
-│   ├── IncidentFormPage.xaml    # Form UI
+│   ├── IncidentFormPage.xaml    # Simple form UI
 │   └── IncidentFormPage.xaml.cs # Code-behind
-├── Converters/
-│   └── BooleanConverters.cs     # Value converters for XAML bindings
-└── App.xaml / MauiProgram.cs    # DI configuration
+└── Converters/
+    └── BooleanConverters.cs     # Value converters
 ```
 
-### Key Features
+## 🔄 Field Transformation Demo
 
-#### 1. Data Transformation Pipeline
+### Before (Form Data - Wrong Field Names)
+```json
+{
+  "title": "Database Connection Error",
+  "severity": "High"
+}
+```
+
+### After (API Payload - Correct Field Names)
+```json
+{
+  "incident_title": "Database Connection Error",
+  "severity_level": "sev_high"
+}
+```
+
+### Transformation Mappings
+
+#### Field Names
+| Form Field | API Field Name | Transformation |
+|------------|----------------|----------------|
+| `Title` | `incident_title` | Direct mapping with name change |
+| `Severity` | `severity_level` | Name change + value mapping |
+
+#### Severity Value Mapping
+| Form Value | API Value |
+|------------|-----------|
+| "Low" | "sev_low" |
+| "Medium" | "sev_medium" |
+| "High" | "sev_high" |
+| "Critical" | "sev_critical" |
+
+## 🚀 How It Works
+
+### 1. User Input
+- User enters incident title (using wrong field name)
+- User selects severity level from dropdown
+
+### 2. Field Transformation
 ```csharp
-// Client Form → API Model transformation
 private static IncidentApiModel TransformToApiModel(IncidentFormModel formData)
 {
     return new IncidentApiModel
     {
-        IncidentTitle = formData.Title,                    // Title → incident_title
-        ReporterFullName = formData.ReporterName,          // ReporterName → reporter_full_name
-        ContactEmail = formData.Email,                     // Email → contact_email
-        PriorityLevel = MapPriorityToApiFormat(formData.Priority), // "High" → "priority_high"
-        // ... more transformations
+        IncidentTitle = formData.Title,                          // Title → incident_title
+        SeverityLevel = MapSeverityToApiFormat(formData.Severity) // Severity → severity_level + value mapping
     };
 }
 ```
 
-#### 2. Field Value Mapping
-```csharp
-// Priority transformation
-"High" → "priority_high"
-"Medium" → "priority_medium"
-"Low" → "priority_low"
-"Critical" → "priority_critical"
-
-// Category transformation  
-"Technical" → "cat_technical"
-"Security" → "cat_security"
-"Hardware" → "cat_hardware"
-// ... etc
-```
-
-#### 3. Mock API Processing
-The `MockApiServerService` demonstrates:
-- JSON payload parsing
-- Server-side validation
-- Response generation
-- Error handling
-- Field name validation
-
-## 🚀 How to Run
-
-### Prerequisites
-- .NET 9.0 SDK
-- Visual Studio 2022 with MAUI workload OR VS Code with C# extension
-- Android emulator/device or iOS simulator (for mobile testing)
-
-### Build & Run
-```bash
-# Restore packages
-dotnet restore
-
-# Build the project
-dotnet build
-
-# Run on specific platform
-dotnet run --framework net9.0-android    # Android
-dotnet run --framework net9.0-ios        # iOS  
-dotnet run --framework net9.0-maccatalyst # macOS
-dotnet run --framework net9.0-windows10.0.19041.0 # Windows
-```
+### 3. Mock API Processing
+- Local mock service receives transformed JSON
+- Validates required fields using correct API field names
+- Returns success response showing transformation worked
 
 ## 📱 User Experience
 
 ### Form Features
-1. **Required Field Validation**: Real-time validation with visual feedback
-2. **Email Validation**: Proper email format checking
-3. **Dropdown Selections**: Priority and Category pickers
-4. **Date Selection**: DatePicker for incident date
-5. **Optional Fields**: Location and urgent flag
-6. **API Status Check**: Button to verify API connectivity
-7. **Loading States**: ActivityIndicator during submission
-8. **Success/Error Messages**: Clear user feedback
+1. **Title Input**: Entry field with placeholder showing it's the "wrong" field name
+2. **Severity Picker**: Dropdown with Low/Medium/High/Critical options
+3. **Transformation Hints**: UI shows what fields will be transformed to
+4. **Validation**: Real-time validation with error display
+5. **Submit to Mock**: Button clearly indicates local mock service
+6. **Response Display**: Shows transformation success message
 
-### Field Transformation Demo
-The app logs show the transformation process:
-```json
-// Original form data (client-side)
-{
-  "title": "Server Down",
-  "reporterName": "John Doe", 
-  "email": "john@company.com",
-  "priority": "High"
-}
-
-// Transformed API payload
-{
-  "incident_title": "Server Down",
-  "reporter_full_name": "John Doe",
-  "contact_email": "john@company.com", 
-  "priority_level": "priority_high"
-}
-```
+### Visual Transformation Guide
+The UI includes hints showing the transformation:
+- "Title → incident_title"
+- "Severity → severity_level (with value mapping)"
+- "Example: 'High' becomes 'sev_high'"
 
 ## 🔧 Technical Implementation
 
-### Dependency Injection
-```csharp
-// MauiProgram.cs
-builder.Services.AddHttpClient<IIncidentApiService, IncidentApiService>();
-builder.Services.AddSingleton<MockApiServerService>();
-builder.Services.AddSingleton<IIncidentApiService, IncidentApiService>();
-builder.Services.AddTransient<IncidentFormViewModel>();
-```
+### Key Components
 
-### MVVM Pattern
-- **ObservableObject**: Base class from CommunityToolkit.Mvvm
-- **RelayCommand**: Command binding for button actions
-- **ObservableProperty**: Auto-generated property change notifications
-- **Data Binding**: Two-way binding between View and ViewModel
-
-### Error Handling
-- Client-side validation with DataAnnotations
-- Network error handling with try-catch
-- API response validation
-- User-friendly error messages
-
-## 🧪 Testing the Implementation
-
-### Test Scenarios
-1. **Valid Submission**: Fill all required fields and submit
-2. **Validation Errors**: Try submitting with empty required fields
-3. **Invalid Email**: Test email validation
-4. **API Status**: Check connectivity to external API
-5. **Field Transformation**: Observe logs for field name changes
-6. **Mock API**: See local processing results
-
-### Expected Behavior
-- Form validates in real-time
-- Successful submissions show confirmation message
-- Field names are transformed correctly in JSON payload
-- Mock API processes and validates transformed data
-- External API receives properly formatted requests
-
-## 📋 API Contract Demonstration
-
-### Input (Client Form)
+#### 1. Form Model (Wrong Field Names)
 ```csharp
 public class IncidentFormModel
 {
-    public string Title { get; set; }
-    public string ReporterName { get; set; } 
-    public string Email { get; set; }
-    public string Priority { get; set; }
-    // ... more fields
+    public string Title { get; set; } = string.Empty;     // Wrong name
+    public string Severity { get; set; } = "Medium";      // Wrong name
 }
 ```
 
-### Output (API Expected)
+#### 2. API Model (Correct Field Names)
 ```csharp
 public class IncidentApiModel
 {
     [JsonPropertyName("incident_title")]
-    public string IncidentTitle { get; set; }
+    public string IncidentTitle { get; set; }     // Correct name
     
-    [JsonPropertyName("reporter_full_name")]
-    public string ReporterFullName { get; set; }
-    
-    [JsonPropertyName("contact_email")]
-    public string ContactEmail { get; set; }
-    
-    [JsonPropertyName("priority_level")]
-    public string PriorityLevel { get; set; }
-    // ... more transformed fields
+    [JsonPropertyName("severity_level")]
+    public string SeverityLevel { get; set; }     // Correct name
 }
 ```
 
-This implementation successfully demonstrates handling data mismatches between mobile form fields and API expectations through proper field transformation, validation, and mock API integration.
+#### 3. Local Mock Service
+- No HTTP calls, pure local processing
+- Demonstrates field validation using correct API names
+- Shows transformation success in response
+
+## 🧪 Testing the Implementation
+
+### Test Flow
+1. Enter incident title (e.g., "Server Down")
+2. Select severity (e.g., "High")
+3. Click "Submit to Mock API"
+4. Observe transformation in logs and response
+
+### Expected Results
+- Form validates correctly
+- Data transforms: Title → incident_title, High → sev_high
+- Mock service processes with correct field names
+- Success message shows transformation completed
+
+## 📋 Simplified Dependencies
+
+### Required NuGet Packages
+- `Microsoft.Maui.Controls` - MAUI framework
+- `CommunityToolkit.Mvvm` - MVVM helpers
+- `System.Text.Json` - JSON serialization
+- `Microsoft.Extensions.Logging.Debug` - Logging
+
+### Removed Dependencies
+- No HttpClient packages (local mock only)
+- No external API calls
+- Minimal dependencies for focused demo
+
+This simplified implementation demonstrates the core concept of field transformation between mobile forms and API expectations using a clean, focused approach with just two fields and local processing.

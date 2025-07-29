@@ -18,9 +18,6 @@ namespace TaskC_IncidentMAUI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // Register HttpClient
-            builder.Services.AddHttpClient<IIncidentApiService, IncidentApiService>();
-
             // Register services
             builder.Services.AddSingleton<MockApiServerService>();
             builder.Services.AddSingleton<IIncidentApiService, IncidentApiService>();
