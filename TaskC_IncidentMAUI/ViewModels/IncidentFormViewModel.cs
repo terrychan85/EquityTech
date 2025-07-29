@@ -14,12 +14,13 @@ namespace TaskC_IncidentMAUI.ViewModels
         public IncidentFormViewModel(IIncidentApiService apiService)
         {
             _apiService = apiService;
-            FormData = new IncidentFormModel();
             
-            // Initialize severity options
+            // Initialize collections first
             SeverityOptions = new ObservableCollection<string> { "Low", "Medium", "High", "Critical" };
-            
             ValidationErrors = new ObservableCollection<string>();
+            
+            // Initialize form data after collections are ready
+            FormData = new IncidentFormModel();
         }
 
         [ObservableProperty]
@@ -80,7 +81,7 @@ namespace TaskC_IncidentMAUI.ViewModels
         private void ResetForm()
         {
             FormData = new IncidentFormModel();
-            ValidationErrors.Clear();
+            ValidationErrors?.Clear();
             SubmitMessage = string.Empty;
             HasSubmitted = false;
             IsFormValid = false;
@@ -94,6 +95,10 @@ namespace TaskC_IncidentMAUI.ViewModels
 
         private bool ValidateForm()
         {
+            // Ensure ValidationErrors is initialized
+            if (ValidationErrors == null || FormData == null)
+                return false;
+                
             ValidationErrors.Clear();
             var context = new ValidationContext(FormData);
             var results = new List<ValidationResult>();
@@ -114,8 +119,11 @@ namespace TaskC_IncidentMAUI.ViewModels
 
         partial void OnFormDataChanged(IncidentFormModel value)
         {
-            // Auto-validate when form data changes
-            ValidateForm();
+            // Auto-validate when form data changes, but only if everything is initialized
+            if (ValidationErrors != null && value != null)
+            {
+                ValidateForm();
+            }
         }
     }
 }
