@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using TaskC_IncidentMAUI.Models;
 
