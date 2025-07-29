@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36109.1 d17.14
+VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncidentApiTaskA", "IncidentApiTaskA\IncidentApiTaskA.csproj", "{CA96E112-087D-B196-3D30-EDABB4583E4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskA_IncidentApi", "IncidentApiTaskA\TaskA_IncidentApi.csproj", "{CA96E112-087D-B196-3D30-EDABB4583E4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncidentRazorTaskB", "IncidentRazorTaskB\IncidentRazorTaskB.csproj", "{7FEC5A47-44AA-BBAF-74E3-9427EC79B06D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskB_IncidentRazor", "IncidentRazorTaskB\TaskB_IncidentRazor.csproj", "{7FEC5A47-44AA-BBAF-74E3-9427EC79B06D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskD_IncidentConsole", "IncidentConsoleTaskD\TaskD_IncidentConsole.csproj", "{CFBC9F13-EB43-9FF7-1D8D-0FC668BB3CED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7FEC5A47-44AA-BBAF-74E3-9427EC79B06D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FEC5A47-44AA-BBAF-74E3-9427EC79B06D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FEC5A47-44AA-BBAF-74E3-9427EC79B06D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFBC9F13-EB43-9FF7-1D8D-0FC668BB3CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFBC9F13-EB43-9FF7-1D8D-0FC668BB3CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFBC9F13-EB43-9FF7-1D8D-0FC668BB3CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFBC9F13-EB43-9FF7-1D8D-0FC668BB3CED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
