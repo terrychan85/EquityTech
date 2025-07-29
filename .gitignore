@@ -5,3 +5,5 @@
 /.vs
 /IncidentApiTaskA/bin/Debug/net9.0
 /IncidentApiTaskA/obj
+/IncidentRazorTaskB/bin/Debug/net9.0
+/IncidentRazorTaskB/obj
